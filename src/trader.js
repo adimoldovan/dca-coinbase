@@ -38,7 +38,7 @@ yargs
 			if (SLACK) {
 				reporter.sendSimpleMessage(r);
 			}
-
+			await printBalance();
 		}
 	)
 	.help('h')
@@ -81,7 +81,7 @@ async function printBalance() {
 		console.table(balance);
 
 		if (SLACK) {
-			slackMsgLines.splice(0, 0, 'Balance:');
+			slackMsgLines.splice(0, 0, '*Balance:*');
 			await reporter.sendSimpleMessage(slackMsgLines.join('\n'));
 		}
 
@@ -91,8 +91,6 @@ async function printBalance() {
 }
 
 async function trade(baseCurrency, quoteCurrency, amount, maxPrice) {
-	await printBalance();
-
 	try {
 		const productId = `${baseCurrency}-${quoteCurrency}`;
 
@@ -140,7 +138,7 @@ async function trade(baseCurrency, quoteCurrency, amount, maxPrice) {
 		const order = await client.getOrder(response.id);
 		prettyPrint(order);
 
-		return `Bought ${amount} ${quoteCurrency} worth of ${baseCurrency}`;
+		return `Bought \`${amount} ${quoteCurrency}\` worth of \`${baseCurrency}\``;
 
 	} catch (error) {
 		console.error(error);

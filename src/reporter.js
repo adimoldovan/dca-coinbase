@@ -14,12 +14,28 @@ async function report(blocks) {
 		retryConfig: retryPolicies.fiveRetriesInFiveMinutes
 	});
 
+	blocks.push(
+		{
+			'type': 'divider',
+		},
+		{
+			'type': 'context',
+			'elements': [
+				{
+					'type': 'mrkdwn',
+					'text': '<https://pro.coinbase.com|Coinbase Pro>'
+				}
+			]
+		}
+	);
+
 	try {
 		await client.chat.postMessage(
 			{
 				blocks,
 				channel: SLACK_CHANNEL,
-				icon_emoji: ':chart:'
+				icon_emoji: ':coin:',
+				username: 'Coinbase DCA bot'
 			});
 	} catch (error) {
 		if ([ ErrorCode.PlatformError,
