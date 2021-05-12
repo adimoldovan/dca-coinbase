@@ -10,7 +10,7 @@ async function report(blocks) {
 	}
 
 	const client = new WebClient(SLACK_TOKEN, {
-		logLevel: LogLevel.INFO,
+		logLevel: LogLevel.ERROR,
 		retryConfig: retryPolicies.fiveRetriesInFiveMinutes
 	});
 
